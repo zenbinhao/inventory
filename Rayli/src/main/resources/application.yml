@@ -1,0 +1,123 @@
+
+server:
+  port: 8888
+  servlet:
+    context-path: /
+servlet:
+  session:
+    timeout: 86400
+spring:
+  application:
+    name: fish
+  profiles:
+    active: dev
+  datasource:
+    # 数据源基本配置
+    username: root
+    password: Zbh981126!@#
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.113.218.191:3306/fish?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    # 数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat,wall
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      # Druid WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+      # Druid StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+        allow:
+        deny:
+  aop:
+    proxy-target-class: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+  #是否启用redis
+  redis:
+    start: false
+#    database: 6
+#    host: 192.168.92.128
+#    port: 6379
+#    password: 666666
+#    timeout: 86400
+
+logback:
+  level: info
+
+mybatis-plus:
+  # mybatis plus的指定xml文件所在位置，使用@Mapper注解默认从mapper.java路径下寻找
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  check-config-location: false
+  # 打印sqlSession的实例
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 刷新mapper
+  refresh-mapper: true
+  global-config:
+    db-config:
+      id-type: ASSIGN_UUID
+      capital-mode: true
+      # 字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: 1
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+mybatis:
+  configuration:
+    # 驼峰命名
+    mapUnderscoreToCamelCase: true
+
+pagehelper:
+  page-size-zero: true
+  #分页插件配置
+  helper-dialect: mysql
+  #当改参数设置为true时，pageNum<=0时会查询第一页，pageNum>pages(超过总数时)，会查询最后一页
+  support-methods-arguments: true
+  params: count=countSql
+
+
+# 数据库备份配置
+#backup:
+#  host: 127.0.0.1
+#  port: 3306
+#  databaseName: common_sys
+#  backupPath: D:/backup/database/common_sys/
+#  mysqlLogPath: D:/Software/mysql/mysql8.0/logs/
+#  mysqlBinPath: D:/Software/mysql/mysql8.0/bin/
+
+
+file:
+  # 访问路径上的地址 localhost:8888/upload
+  staticAccessPath: /upload/
+  # 服务器本地路径
+  uploadFolder: /upload/
+  maxSize: 5MB
+  countSize: 10MB
+
+
