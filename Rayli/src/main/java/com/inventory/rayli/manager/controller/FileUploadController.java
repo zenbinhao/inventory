@@ -46,7 +46,7 @@ public class FileUploadController extends BaseController {
         // 获取服务器位置下面的路径
         String path = uploadFolder;
         //创建一个io流
-        File file = new File(path);
+        File file = new File("D:/"+path);
 
         log.info("文件的保存路径:"+path);
         if (!file.exists() && !file.isDirectory()) {

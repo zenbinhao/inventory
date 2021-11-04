@@ -2,6 +2,6 @@ spring:
   datasource:
     # 数据源基本配置
     username: root
-    password: Zbh981126!@#
+    password: 666666
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.113.218.191:3306/fish?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/fish?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
