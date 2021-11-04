@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inventory.rayli.manager.mapper.AccountUserInfoMapper">
+
+    <select id="selectList" parameterType="com.inventory.rayli.manager.query.AccountUserInfoQuery" resultType="com.inventory.rayli.manager.vo.AccountUserInfoVO">
+        SELECT a.*,b.user_name FROM rayli_userinfo as a inner join rayli_user as b on a.fk_user_id = b.id
+        WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted
+        <if test="userName !=null and userName!=''">
+            and b.user_name like concat('%',#{userName},'%')
+        </if>
+        ORDER BY a.gmt_create
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="com.inventory.rayli.manager.vo.AccountUserInfoVO">
+        SELECT a.*,b.user_name FROM rayli_userinfo as a inner join rayli_user as b on a.fk_user_id = b.id
+        WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted and a.id = #{id}
+    </select>
+
+    <update id="deleteData" parameterType="map">
+        update rayli_userInfo set is_deleted = 1 where id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

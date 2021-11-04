@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @ApiModel("用户表")
-@TableName("fish_user")
+@TableName("rayli_user")
 @Data
 public class AccountUser extends BusinessPO {
 

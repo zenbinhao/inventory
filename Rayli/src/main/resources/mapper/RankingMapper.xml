@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inventory.rayli.manager.mapper.RankingMapper">
+
+    <select id="selectList" resultType="com.inventory.rayli.manager.vo.RankingVO">
+        select a.*,b.food_name FROM rayli_ranking as a left JOIN rayli_food as b on a.fk_food_id = b.id
+        ORDER BY a.rank asc
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="com.inventory.rayli.manager.vo.RankingVO">
+        select a.*,b.food_name FROM rayli_ranking as a left JOIN rayli_food as b on a.fk_food_id = b.id
+        WHERE b.is_deleted = 0 and b.id = #{id}
+    </select>
+
+    <delete id="deleteByRank" parameterType="Integer">
+        delete from rayli_ranking as a where a.rank = #{rank}
+    </delete>
+
+    <insert id="insertData" parameterType="com.inventory.rayli.manager.po.Ranking">
+        insert into rayli_ranking VALUES (#{fkFoodId},#{rank})
+    </insert>
+
+    <update id="updateData" parameterType="com.inventory.rayli.manager.po.Ranking">
+        UPDATE rayli_ranking as a SET a.fk_food_id = #{fkFoodId} WHERE a.rank = #{rank};
+    </update>
+
+    <select id="countRank" resultType="Integer" parameterType="Integer">
+        select count(a.rank) FROM rayli_ranking as a WHERE a.rank = #{rank}
+    </select>
+
+    <select id="countFoodId" resultType="Integer" parameterType="String">
+        select count(a.fk_food_id) FROM rayli_ranking as a WHERE a.fk_food_id = #{fkFoodId}
+    </select>
+</mapper>

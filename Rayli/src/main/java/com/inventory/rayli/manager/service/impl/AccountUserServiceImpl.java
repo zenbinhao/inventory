@@ -2,17 +2,24 @@ package com.inventory.rayli.manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.inventory.rayli.common.em.ErrorCodeEnum;
 import com.inventory.rayli.common.util.BeanUtil;
 import com.inventory.rayli.common.util.ChangeType;
 import com.inventory.rayli.common.vo.BusinessException;
 import com.inventory.rayli.manager.dto.AccountUserDTO;
+import com.inventory.rayli.manager.dto.AccountUserUpdateDTO;
 import com.inventory.rayli.manager.mapper.AccountUserMapper;
 import com.inventory.rayli.manager.po.AccountUser;
+import com.inventory.rayli.manager.query.AccountUserQuery;
 import com.inventory.rayli.manager.service.AccountUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class AccountUserServiceImpl extends ServiceImpl<AccountUserMapper, AccountUser> implements AccountUserService {
@@ -42,5 +49,42 @@ public class AccountUserServiceImpl extends ServiceImpl<AccountUserMapper, Accou
         accountUser.setUserPassword(password);
         accountUserMapper.insert(accountUser);
         return 0;
+    }
+
+    @Transactional(rollbackFor = BusinessException.class)
+    @Override
+    public void delete(String ids) {
+        if (StringUtils.isEmpty(ids)) {
+            throw new BusinessException("请选择要删除的记录");
+        }
+        String []id =ids.split(",");
+        int row = accountUserMapper.deleteData(id);
+        if (row <=0|| ids.length()<=0) {
+            throw new BusinessException("批量删除操作失败");
+        }
+    }
+
+    @Override
+    public void updateData(AccountUserUpdateDTO formDTO) {
+        AccountUser accountUser = new AccountUser();
+        BeanUtil.copy(formDTO,accountUser);
+        accountUserMapper.updateById(accountUser);
+    }
+
+    @Override
+    public PageInfo<AccountUser> pageData(AccountUserQuery query) {
+        //开启条件查询
+        QueryWrapper<AccountUser> queryWrapper = new QueryWrapper<AccountUser>();
+        queryWrapper.lambda().like(StringUtils.isNotEmpty(query.getUserName()),AccountUser::getUserName,query.getUserName()).orderByDesc(AccountUser::getGmtCreate);
+
+        //开启分页
+        PageHelper.startPage(query.getPageNum(),query.getPageSize());
+        List<AccountUser> list = accountUserMapper.selectList(queryWrapper);
+        return PageInfo.of(list);
+    }
+
+    @Override
+    public AccountUser selectById(String id) {
+        return accountUserMapper.selectById(id);
     }
 }
