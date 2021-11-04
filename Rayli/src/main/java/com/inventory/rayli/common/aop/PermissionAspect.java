@@ -11,6 +11,7 @@ import com.inventory.rayli.common.service.AuthenticationService;
 import com.inventory.rayli.common.vo.BusinessException;
 import com.inventory.rayli.manager.mapper.AccountUserMapper;
 import com.inventory.rayli.manager.po.AccountUser;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @Aspect
 @Component
 public class PermissionAspect {
@@ -33,7 +35,7 @@ public class PermissionAspect {
     public PermissionAspect() {
     }
 
-    @Pointcut("execution(* com.fish.server.manager.controller.*Controller.*(..))")
+    @Pointcut("execution(* com.inventory.rayli.manager.controller.*Controller.*(..))")
     public void pointCut() {
     }
 
@@ -61,7 +63,8 @@ public class PermissionAspect {
         }
 
         if(operation.saveLog()&& paramUser!=null){
-            System.out.println("保存"+paramUser.getUserName()+"的"+type+"操作的记录");
+            //暂时保存到日志中
+            log.info("保存"+paramUser.getUserName()+"的"+type+"操作的记录");
         }
     }
 }

@@ -8,7 +8,7 @@ servlet:
     timeout: 86400
 spring:
   application:
-    name: fish
+    name: rayli
   profiles:
     active: dev
   datasource:

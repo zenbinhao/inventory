@@ -97,4 +97,15 @@ public class LoginServiceImpl extends ServiceImpl<AccountUserMapper, AccountUser
             this.cacheService.cleanSessionCache(this.authenticationService.getAuthToken(), "sessionUser");
         }
     }
+
+    @Override
+    public SessionUser stateRe(HttpServletRequest request) {
+        SessionUser sessionUser = null;
+
+        if (this.authenticationService.getAuthToken() != null) {
+
+            sessionUser = authenticationService.getSessionUser();
+        }
+        return sessionUser;
+    }
 }

@@ -11,7 +11,7 @@
     <!-- 设置上下文名称 -->
     <contextName>${app.name}</contextName>
     <!-- 引入配置文件 -->
-    <property name="app.name" value="${app.name:-fish}"/>
+    <property name="app.name" value="${app.name:-rayli}"/>
     <!-- 日志记录级别 -->
     <!-- 设置日志输出目录 -->
     <property name="logback_rolling_path" value="${logback.rolling.path:-logs}"/>

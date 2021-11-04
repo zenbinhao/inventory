@@ -2,6 +2,7 @@ package com.inventory.rayli.manager.controller;
 
 
 import com.inventory.rayli.common.aop.AopOperation;
+import com.inventory.rayli.common.bo.SessionUser;
 import com.inventory.rayli.common.controller.BaseController;
 import com.inventory.rayli.common.vo.ResultVO;
 import com.inventory.rayli.manager.dto.LoginFormDTO;
@@ -43,6 +44,16 @@ public class LoginController extends BaseController {
     public ResultVO loginOut() {
         this.loginService.loginOut(this.request);
         return this.success("注销成功");
+    }
+
+    @AopOperation(
+            type="登录状态确认"
+    )
+    @ApiOperation("登录状态确认")
+    @GetMapping({"stateRe"})
+    public ResultVO stateRe(){
+        SessionUser sessionUser = this.loginService.stateRe(this.request);
+        return this.success(sessionUser,"状态查看成功");
     }
 
 //    @ResponseBody
