@@ -8,9 +8,11 @@ import com.github.pagehelper.PageInfo;
 import com.inventory.rayli.common.aop.AopOperation;
 import com.inventory.rayli.common.controller.BaseController;
 import com.inventory.rayli.common.vo.ResultVO;
+import com.inventory.rayli.manager.dto.AccountUserDTO;
 import com.inventory.rayli.manager.po.ArticleCategory;
 import com.inventory.rayli.manager.query.ArticleCategoryQuery;
 import com.inventory.rayli.manager.query.ArticleQuery;
+import com.inventory.rayli.manager.service.AccountUserService;
 import com.inventory.rayli.manager.service.ArticleCategorySevice;
 import com.inventory.rayli.manager.service.ArticleService;
 import com.inventory.rayli.manager.vo.ArticleVO;
@@ -19,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @Api(
         tags = {"用户端-接口"}
@@ -33,9 +36,20 @@ public class UserSideController extends BaseController {
     @Resource
     private ArticleCategorySevice articleCategorySevice;
 
-    @AopOperation(
-            type = "分页查询"
-    )
+
+    @Resource
+    AccountUserService accountUserService;
+
+    @ApiOperation("注册接口")
+    @PostMapping("/")
+    public ResultVO insertData(@Valid @RequestBody AccountUserDTO form) {
+        accountUserService.registerAccount(form);
+        return this.success("注册成功");
+    }
+
+//    @AopOperation(
+//            type = "分页查询"
+//    )
     @ApiOperation("分页查询文章类别写100查全即可")
     @PostMapping({"/articleCategory"})
     public ResultVO<PageInfo<ArticleCategory>> pageDate(@RequestBody ArticleCategoryQuery query){
@@ -43,9 +57,9 @@ public class UserSideController extends BaseController {
         return this.success(info,"分页查询成功");
     }
 
-    @AopOperation(
-            type = "分页查询"
-    )
+//    @AopOperation(
+//            type = "分页查询"
+//    )
     @ApiOperation("分页查询文章信息")
     @PostMapping({"/article"})
     public ResultVO<PageInfo<ArticleVO>> pageDate(@RequestBody ArticleQuery query){
@@ -53,9 +67,9 @@ public class UserSideController extends BaseController {
         return this.success(info,"分页查询成功");
     }
 
-    @AopOperation(
-            type = "详情"
-    )
+//    @AopOperation(
+//            type = "详情"
+//    )
     @ApiOperation("通过id查询文章详情")
     @GetMapping({"/article/{id}"})
     public ResultVO<ArticleVO> selectById(@PathVariable String id) {

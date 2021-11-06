@@ -3,7 +3,7 @@
 <mapper namespace="com.inventory.rayli.manager.mapper.ArticleMapper">
 
     <select id="selectList" parameterType="com.inventory.rayli.manager.query.ArticleQuery" resultType="com.inventory.rayli.manager.vo.ArticleVO">
-        SELECT a.category_name,b.* FROM rayli_articlecategory as a inner join rayli_article as b on a.id = b.fk_category_id
+        SELECT a.category_name,b.* FROM rayli_articleCategory as a inner join rayli_article as b on a.id = b.fk_category_id
         WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted
         <if test="fkCategoryId !=null and fkCategoryId!=''">
             and b.fk_category_id like concat('%',#{fkCategoryId},'%')
@@ -12,7 +12,7 @@
     </select>
 
     <select id="selectById" parameterType="String" resultType="com.inventory.rayli.manager.vo.ArticleVO">
-        SELECT a.category_name,b.* FROM rayli_articlecategory as a inner join rayli_article as b on a.id = b.fk_category_id
+        SELECT a.category_name,b.* FROM rayli_articleCategory as a inner join rayli_article as b on a.id = b.fk_category_id
         WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted and b.id = #{id}
     </select>
 
