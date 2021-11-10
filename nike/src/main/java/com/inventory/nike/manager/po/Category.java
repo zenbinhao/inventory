@@ -1,21 +1,21 @@
-package com.inventory.rayli.manager.po;/*
+package com.inventory.nike.manager.po;/*
  * @Author: zeng
  * @Data: 2021/11/4 16:02
  * @Description: TODO
  */
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.inventory.rayli.common.po.BusinessPO;
+import com.inventory.nike.common.po.BusinessPO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-@ApiModel("文章分类表")
-@TableName("rayli_articleCategory")
+@ApiModel("商品分类表")
+@TableName("nike_category")
 @Data
-public class ArticleCategory extends BusinessPO {
+public class Category extends BusinessPO {
 
-    @ApiModelProperty("文章分类名称")
+    @ApiModelProperty("商品分类名称")
     private String categoryName;
 
 }

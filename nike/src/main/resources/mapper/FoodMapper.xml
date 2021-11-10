@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inventory.nike.manager.mapper.FoodMapper">
+
+    <select id="selectList" parameterType="com.inventory.nike.manager.query.FoodQuery" resultType="com.inventory.nike.manager.vo.FoodVO">
+        SELECT a.category_name,b.* FROM nike_category as a inner join nike_food as b on a.id = b.fk_category_id
+        WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted
+        <if test="fkCategoryId !=null and fkCategoryId!=''">
+            and b.fk_category_id = #{fkCategoryId}
+        </if>
+        <if test="foodName !=null and foodName!=''">
+            and b.food_name like concat('%',#{foodName},'%')
+        </if>
+        ORDER BY b.gmt_create
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="com.inventory.nike.manager.vo.FoodVO">
+        SELECT a.category_name,b.* FROM nike_category as a inner join nike_food as b on a.id = b.fk_category_id
+        WHERE a.is_deleted = 0 AND a.is_deleted = b.is_deleted and b.id = #{id}
+    </select>
+
+    <update id="deleteData" parameterType="map">
+        update nike_food set is_deleted = 1 where id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

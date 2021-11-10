@@ -46,7 +46,7 @@ public class FileUploadController extends BaseController {
         // 获取服务器位置下面的路径
         String path = uploadFolder;
         //创建一个io流
-        File file = new File("D:/"+path);
+        File file = new File(path);
 
         log.info("文件的保存路径:"+path);
         if (!file.exists() && !file.isDirectory()) {
@@ -76,6 +76,7 @@ public class FileUploadController extends BaseController {
                 picture.transferTo(targetFile);
                 url = url + path + newFilename+";";
             } catch (Exception e) {
+                log.info(e.getMessage());
                 throw new BusinessException(ErrorCodeEnum.MAX_UPLOAD_SIZE);
             }
         }

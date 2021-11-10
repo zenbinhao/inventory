@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inventory.nike.manager.mapper.ShoppingMapper">
+
+    <select id="selectList" resultType="com.inventory.nike.manager.vo.ShoppingVO" parameterType="String">
+        select a.*,c.old_price,c.now_price,c.food_name,c.file_list FROM nike_shopping as a
+        inner join nike_user as b on a.fk_user_id = b.id
+        left join nike_food as c on a.fk_food_id = c.id
+        where a.fk_user_id = #{id}
+        ORDER BY a.gmt_create desc
+    </select>
+
+    <update id="deleteData" parameterType="map">
+        DELETE FROM nike_shopping as a WHERE a.id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

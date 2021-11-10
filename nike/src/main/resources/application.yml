@@ -1,6 +1,6 @@
 
 server:
-  port: 8889
+  port: 8999
   servlet:
     context-path: /
 servlet:
@@ -14,9 +14,9 @@ spring:
   datasource:
     # 数据源基本配置
     username: root
-    password: 666666
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/nike?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+      password: Zbh981126!@#
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://47.102.36.69:3306/nike?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     # 数据源其他配置
     initialSize: 5
     minIdle: 5

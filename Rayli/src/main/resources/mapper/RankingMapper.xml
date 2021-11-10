@@ -13,7 +13,7 @@
     </select>
 
     <delete id="deleteByRank" parameterType="Integer">
-        delete from rayli_ranking as a where a.rank = #{rank}
+        delete from rayli_ranking where rayli_ranking.rank = #{rank}
     </delete>
 
     <insert id="insertData" parameterType="com.inventory.rayli.manager.po.Ranking">
