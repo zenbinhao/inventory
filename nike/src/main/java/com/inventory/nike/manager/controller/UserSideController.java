@@ -8,9 +8,11 @@ import com.github.pagehelper.PageInfo;
 import com.inventory.nike.common.aop.AopOperation;
 import com.inventory.nike.common.controller.BaseController;
 import com.inventory.nike.common.vo.ResultVO;
+import com.inventory.nike.manager.dto.AccountUserDTO;
 import com.inventory.nike.manager.po.Category;
 import com.inventory.nike.manager.query.CategoryQuery;
 import com.inventory.nike.manager.query.FoodQuery;
+import com.inventory.nike.manager.service.AccountUserService;
 import com.inventory.nike.manager.service.CategorySevice;
 import com.inventory.nike.manager.service.FoodService;
 import com.inventory.nike.manager.vo.FoodVO;
@@ -19,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 
 @Api(
@@ -27,6 +30,9 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/userSide")
 public class UserSideController extends BaseController {
+
+    @Resource
+    private AccountUserService accountUserService;
 
     @Resource
     private FoodService foodService;
@@ -54,5 +60,12 @@ public class UserSideController extends BaseController {
 
         FoodVO foodVO = foodService.selectById(id);
         return this.success(foodVO, "查询id为:" + id + "商品成功");
+    }
+
+    @ApiOperation("注册接口")
+    @PostMapping("/")
+    public ResultVO insertData(@Valid @RequestBody AccountUserDTO form) {
+        accountUserService.registerAccount(form);
+        return this.success("注册成功");
     }
 }

@@ -10,11 +10,11 @@
         ORDER BY a.gmt_create desc
     </select>
     <delete id="deleteBy" parameterType="String">
-        DELETE FROM nike_sign as a WHERE a.fk_food_id = #{foodId} and a.fk_user_id = #{userId}
+        DELETE FROM nike_sign  WHERE fk_food_id = #{foodId} and fk_user_id = #{userId}
     </delete>
 
     <delete id="deleteData" parameterType="map">
-        DELETE FROM nike_sign as a WHERE a.id in
+        DELETE FROM nike_sign  WHERE id in
         <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>

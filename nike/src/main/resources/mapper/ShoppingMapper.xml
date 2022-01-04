@@ -11,7 +11,7 @@
     </select>
 
     <update id="deleteData" parameterType="map">
-        DELETE FROM nike_shopping as a WHERE a.id in
+        DELETE FROM nike_shopping  WHERE id in
         <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
